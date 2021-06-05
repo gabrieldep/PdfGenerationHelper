@@ -6,6 +6,11 @@
     <Version>1.0.0</Version>
     <Authors>Gabriel de Paula Silva</Authors>
     <Company>Por conta propria :)</Company>
+	<Description>Nuget package that helps in the Pdf documents creation.</Description>
+	<RepositoryType>Git</RepositoryType>
+	<RepositoryUrl>https://github.com/gabrieldep/PdfGenerationHelper</RepositoryUrl>
+	<TargetFramework>net5.0</TargetFramework>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
