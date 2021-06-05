@@ -20,7 +20,7 @@ namespace PdfGenerationHelper.Controls
         /// <param name="text">String with the text.</param>
         /// <param name="fontSize">Font size.</param>
         /// <param name="alignment">Text alignment.</param>
-        public static void AddText(ref Document document, string text, int fontSize, TextAlignment alignment)
+        public static void AddText(ref Document document, string text, float fontSize, TextAlignment alignment)
         {
             document.Add(new Paragraph(text)
                                 .SetTextAlignment(alignment)
@@ -32,7 +32,7 @@ namespace PdfGenerationHelper.Controls
         /// </summary>
         /// <param name="document">Document that text will be add.</param>
         /// <param name="objects">IEnumerable with the objects to complete the table.</param>
-        public static void AddTable<T>(ref Document document, IEnumerable<T> objects)
+        public static void AddTable<T>(ref Document document, float fontSize, IEnumerable<T> objects)
         {
             Type type = objects.First().GetType();
 
@@ -41,6 +41,8 @@ namespace PdfGenerationHelper.Controls
 
             Table table = new(properties.Count());
 
+            table.SetFontSize(fontSize);
+            
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
                 {
