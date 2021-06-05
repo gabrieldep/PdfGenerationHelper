@@ -9,8 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="Controls\" />
+    <PackageReference Include="itext7" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
