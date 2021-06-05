@@ -2,9 +2,9 @@
 
 namespace PdfGenerationHelper.Model
 {
-    class TableObject
+    public class PdfObjectProperty
     {
-        public PropertyInfo Property { get; set; }
+        public PropertyInfo PropertyInfo { get; set; }
         public string Value { get; set; }
     }
 }
