@@ -1,4 +1,5 @@
-﻿using iText.Layout;
+﻿using iText.IO.Image;
+using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using PdfGenerationHelper.Model;
@@ -28,11 +29,25 @@ namespace PdfGenerationHelper.Controls
         }
 
         /// <summary>
-        /// Add a table to the document
+        /// Add a text to the document
+        /// </summary>
+        /// <param name="document">Document that text will be add.</param>
+        /// <param name="legend">String with the text.</param>
+        /// <param name="fontSize">Font size.</param>
+        /// <param name="alignment">Text alignment.</param>
+        /// <param name="path">String with image name.</param>
+        public static void AddImage(ref Document document, string legend, float fontSize, TextAlignment alignment, string path)
+        {
+            document.Add(new Image(ImageDataFactory.Create(path)));
+            AddText(ref document, legend, fontSize, alignment);
+        }
+
+        /// <summary>
+        /// Add a table to the document.
         /// </summary>
         /// <param name="document">Document that text will be add.</param>
         /// <param name="objects">IEnumerable with the objects to complete the table.</param>
-        public static void AddTable<T>(ref Document document, float fontSize, IEnumerable<T> objects)
+        public static void AddTable<T>(ref Document document, float fontSize, IEnumerable<T> objects, TextAlignment alignment)
         {
             Type type = objects.First().GetType();
 
@@ -40,8 +55,8 @@ namespace PdfGenerationHelper.Controls
                  .Where(p => p.PropertyType.Namespace == "System");
 
             Table table = new(properties.Count());
-
             table.SetFontSize(fontSize);
+            table.SetTextAlignment(alignment);            
             
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
