@@ -1,4 +1,5 @@
 ﻿using iText.IO.Image;
+using iText.Kernel.Colors;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
@@ -21,25 +22,24 @@ namespace PdfGenerationHelper.Controls
         /// <param name="text">String with the text.</param>
         /// <param name="fontSize">Font size.</param>
         /// <param name="alignment">Text alignment.</param>
-        public static void AddText(ref Document document, string text, float fontSize, TextAlignment alignment)
+        public static void AddText(ref Document document, string text, float fontSize, TextAlignment alignment, Color color)
         {
             document.Add(new Paragraph(text)
                                 .SetTextAlignment(alignment)
-                                .SetFontSize(fontSize));
+                                .SetFontSize(fontSize)
+                                .SetFontColor(color));
         }
 
         /// <summary>
         /// Add a text to the document
         /// </summary>
         /// <param name="document">Document that text will be add.</param>
-        /// <param name="legend">String with the text.</param>
-        /// <param name="fontSize">Font size.</param>
-        /// <param name="alignment">Text alignment.</param>
         /// <param name="path">String with image name.</param>
-        public static void AddImage(ref Document document, string legend, float fontSize, TextAlignment alignment, string path)
+        public static void AddImage(ref Document document, string path)
         {
-            document.Add(new Image(ImageDataFactory.Create(path)));
-            AddText(ref document, legend, fontSize, alignment);
+            ImageData imageData = ImageDataFactory.Create(path);
+            Image image = new(imageData);
+            document.Add(image);
         }
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace PdfGenerationHelper.Controls
 
             Table table = new(properties.Count());
             table.SetFontSize(fontSize);
-            table.SetTextAlignment(alignment);            
-            
+            table.SetTextAlignment(alignment);
+
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
                 {

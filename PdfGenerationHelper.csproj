@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>PdfGenerationHelper</PackageId>
-    <Version>1.0.15</Version>
+    <Version>1.0.24</Version>
     <Authors>Gabriel de Paula Silva</Authors>
     <Company>Por conta propria :)</Company>
 	<Description>Nuget package that helps in the Pdf documents creation.</Description>
