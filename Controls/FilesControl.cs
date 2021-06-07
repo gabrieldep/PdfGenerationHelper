@@ -20,41 +20,40 @@ namespace PdfGenerationHelper.Controls
         /// <summary>
         /// Add a text to the document
         /// </summary>
-        /// <param name="document">Document that text will be add.</param>
         /// <param name="text">String with the text.</param>
         /// <param name="fontSize">Font size.</param>
         /// <param name="alignment">Text alignment.</param>
-        public static void AddText(ref Document document, string text, float fontSize, TextAlignment alignment, Color color)
+        public static Paragraph CreateText(string text, float fontSize, TextAlignment alignment, Color color)
         {
-            document.Add(new Paragraph(text)
-                                .SetTextAlignment(alignment)
-                                .SetFontSize(fontSize)
-                                .SetFontColor(color));
+            Paragraph paragraph = new Paragraph(text)
+                    .SetTextAlignment(alignment)
+                    .SetFontSize(fontSize)
+                    .SetFontColor(color);
+
+            return paragraph;
         }
 
         /// <summary>
         /// Add a text to the document
         /// </summary>
-        /// <param name="document">Document that text will be add.</param>
         /// <param name="path">String with image name.</param>
-        public static void AddImage(ref Document document, string path)
+        public static Image CreateImage(string path)
         {
             ImageData imageData = ImageDataFactory.Create(path);
             Image image = new(imageData);
-            document.Add(image);
+            return image;
         }
 
         /// <summary>
-        /// Add a table to the document.
+        /// Fill a table with the data received.
         /// </summary>
-        /// <param name="document">Document that text will be add.</param>
         /// <param name="objects">IEnumerable with the objects to complete the table.</param>
         /// <param name="fontSize">Text ont size.</param>
         /// <param name="textAlignment">TextAlignment.</param>
         /// <param name="percentWidth">Denominador da razão: Largura da página / denominadorWidth.</param>
         /// <param name="horizontalAlignment">Table HorizontalAlignment.</param>
-        public static void AddTable<T>(ref Document document, float fontSize,
-            IEnumerable<T> objects, TextAlignment textAlignment,
+        /// <returns>Return a filled table.</returns>
+        public static Table CreateTable<T>(float fontSize, IEnumerable<T> objects, TextAlignment textAlignment,
             float percentWidth, HorizontalAlignment horizontalAlignment)
         {
             Type type = objects.First().GetType();
@@ -97,7 +96,7 @@ namespace PdfGenerationHelper.Controls
                     table.AddCell(property.Value);
                 }
             }
-            document.Add(table);
+            return table;
         }
     }
 }
