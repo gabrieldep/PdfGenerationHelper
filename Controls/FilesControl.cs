@@ -59,8 +59,9 @@ namespace PdfGenerationHelper.Controls
         {
             Type type = objects.First().GetType();
 
-            IEnumerable<PropertyInfo> properties = type.GetProperties()
-                 .Where(p => p.PropertyType.Namespace == "System");
+            IEnumerable<PropertyInfo> properties = type
+                .GetProperties()
+                .Where(p => p.PropertyType.Namespace == "System");
 
             Table table = new(properties.Count());
 
@@ -79,7 +80,8 @@ namespace PdfGenerationHelper.Controls
                         PropertyInfo = p,
                         Value = type
                                 .GetProperty(p.Name)
-                                .GetValue(o).ToString()
+                                .GetValue(o)
+                                .ToString()
                     })
                 });
 
