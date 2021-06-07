@@ -1,5 +1,7 @@
 ﻿using iText.IO.Image;
 using iText.Kernel.Colors;
+using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
@@ -47,7 +49,13 @@ namespace PdfGenerationHelper.Controls
         /// </summary>
         /// <param name="document">Document that text will be add.</param>
         /// <param name="objects">IEnumerable with the objects to complete the table.</param>
-        public static void AddTable<T>(ref Document document, float fontSize, IEnumerable<T> objects, TextAlignment alignment)
+        /// <param name="fontSize">Text ont size.</param>
+        /// <param name="textAlignment">TextAlignment.</param>
+        /// <param name="percentWidth">Denominador da razão: Largura da página / denominadorWidth.</param>
+        /// <param name="horizontalAlignment">Table HorizontalAlignment.</param>
+        public static void AddTable<T>(ref Document document, float fontSize,
+            IEnumerable<T> objects, TextAlignment textAlignment,
+            float percentWidth, HorizontalAlignment horizontalAlignment)
         {
             Type type = objects.First().GetType();
 
@@ -55,8 +63,12 @@ namespace PdfGenerationHelper.Controls
                  .Where(p => p.PropertyType.Namespace == "System");
 
             Table table = new(properties.Count());
+
+            table.SetWidth(new UnitValue(2, percentWidth));
+            table.SetHorizontalAlignment(horizontalAlignment);
+
             table.SetFontSize(fontSize);
-            table.SetTextAlignment(alignment);
+            table.SetTextAlignment(textAlignment);
 
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
