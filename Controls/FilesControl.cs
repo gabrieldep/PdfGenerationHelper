@@ -54,7 +54,8 @@ namespace PdfGenerationHelper.Controls
         /// <param name="horizontalAlignment">Table HorizontalAlignment.</param>
         /// <returns>Return a filled table.</returns>
         public static Table CreateTable<T>(float fontSize, IEnumerable<T> objects, TextAlignment textAlignment,
-            float percentWidth, HorizontalAlignment horizontalAlignment)
+            float percentWidth, HorizontalAlignment horizontalAlignment,
+            Color tableBackgroundColor)
         {
             Type type = objects.First().GetType();
 
@@ -69,6 +70,8 @@ namespace PdfGenerationHelper.Controls
 
             table.SetFontSize(fontSize);
             table.SetTextAlignment(textAlignment);
+
+            table.SetBackgroundColor(tableBackgroundColor);
 
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
