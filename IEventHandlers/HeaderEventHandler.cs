@@ -13,14 +13,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PdfGenerationHelper.Controls
+namespace PdfGenerationHelper.IEventHandlers
 {
     public class HeaderEventHandler : IEventHandler
     {
-        private readonly Color _backgroundColor;
         private readonly Color _textColor;
         private readonly string _text;
-        private readonly float _waterMarkFontSize;
         private readonly float _textFontSize;
         public HeaderEventHandler(string text, Color textColor, float textFontSize)
         {
@@ -40,6 +38,7 @@ namespace PdfGenerationHelper.Controls
             //Add header and footer
             pdfCanvas.BeginText()
                         .SetFontAndSize(PdfFontFactory.CreateFont(), _textFontSize)
+                        .SetColor(_textColor, false)
                         .MoveText(pageSize.GetWidth() / 2 - 60, pageSize.GetTop() - 20)
                         .ShowText(_text)
                         .EndText();
