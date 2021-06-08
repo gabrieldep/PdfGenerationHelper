@@ -95,7 +95,7 @@ namespace PdfGenerationHelper.Controls
             {
                 foreach (PdfObjectProperty property in pdfObject.Properties)
                 {
-                    table.AddCell(property.Value);
+                    table.AddCell(string.IsNullOrEmpty(property.Value) ? "" : property.Value);
                 }
             }
             return table;
