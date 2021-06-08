@@ -29,7 +29,7 @@ namespace PdfGenerationHelper.Controls
                     .SetTextAlignment(alignment)
                     .SetFontSize(fontSize)
                     .SetFontColor(color);
-
+            
             return paragraph;
         }
 
@@ -82,8 +82,7 @@ namespace PdfGenerationHelper.Controls
                         PropertyInfo = p,
                         Value = type
                                 .GetProperty(p.Name)
-                                .GetValue(o)
-                                .ToString()
+                                .GetValue(o)?.ToString()
                     })
                 });
 
