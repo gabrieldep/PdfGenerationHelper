@@ -19,6 +19,9 @@ namespace PdfGenerationHelper.IEventHandlers
             _backgroundColor = backgroundColor;
         }
 
+        /// <summary>
+        /// HandleEvent- Add a background color
+        /// </summary>
         public void HandleEvent(Event @event)
         {
             PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;

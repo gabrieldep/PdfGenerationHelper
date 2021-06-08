@@ -25,6 +25,9 @@ namespace PdfGenerationHelper.IEventHandlers
             _text = text;
         }
 
+        /// <summary>
+        /// HandleEvent- Add a water mark
+        /// </summary>
         public void HandleEvent(Event @event)
         {
             PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;

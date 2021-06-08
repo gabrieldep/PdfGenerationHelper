@@ -27,6 +27,9 @@ namespace PdfGenerationHelper.IEventHandlers
             _textFontSize = textFontSize;
         }
 
+        /// <summary>
+        /// HandleEvent- Add header for each page
+        /// </summary>
         public void HandleEvent(Event @event)
         {
             PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;
@@ -35,7 +38,6 @@ namespace PdfGenerationHelper.IEventHandlers
             Rectangle pageSize = page.GetPageSize();
             PdfCanvas pdfCanvas = new(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
 
-            //Add header and footer
             pdfCanvas.BeginText()
                         .SetFontAndSize(PdfFontFactory.CreateFont(), _textFontSize)
                         .SetColor(_textColor, false)
