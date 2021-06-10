@@ -29,7 +29,6 @@ namespace PdfGenerationHelper.Controls
                     .SetTextAlignment(alignment)
                     .SetFontSize(fontSize)
                     .SetFontColor(color);
-            
             return paragraph;
         }
 
@@ -48,14 +47,8 @@ namespace PdfGenerationHelper.Controls
         /// Fill a table with the data received.
         /// </summary>
         /// <param name="objects">IEnumerable with the objects to complete the table.</param>
-        /// <param name="fontSize">Text ont size.</param>
-        /// <param name="textAlignment">TextAlignment.</param>
-        /// <param name="percentWidth">Denominador da razão: Largura da página / denominadorWidth.</param>
-        /// <param name="horizontalAlignment">Table HorizontalAlignment.</param>
         /// <returns>Return a filled table.</returns>
-        public static Table CreateTable<T>(float fontSize, IEnumerable<T> objects, TextAlignment textAlignment,
-            float percentWidth, HorizontalAlignment horizontalAlignment,
-            Color tableBackgroundColor)
+        public static Table CreateTable<T>(IEnumerable<T> objects)
         {
             Type type = objects.First().GetType();
 
@@ -64,14 +57,6 @@ namespace PdfGenerationHelper.Controls
                 .Where(p => p.PropertyType.Namespace == "System");
 
             Table table = new(properties.Count());
-
-            table.SetWidth(new UnitValue(2, percentWidth));
-            table.SetHorizontalAlignment(horizontalAlignment);
-
-            table.SetFontSize(fontSize);
-            table.SetTextAlignment(textAlignment);
-
-            table.SetBackgroundColor(tableBackgroundColor);
 
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
