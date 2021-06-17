@@ -1,11 +1,8 @@
-﻿using iText.IO.Image;
-using iText.Kernel.Colors;
-using iText.Kernel.Geom;
+﻿using iText.Kernel.Colors;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using PdfGenerationHelper.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,27 +11,51 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PdfGenerationHelper.Controls
+namespace PdfGenerationHelper.Model
 {
-    public class FilesControl
+    public class PdfGHDocument
     {
-        /// <summary>
-        /// Add a text to the document
-        /// </summary>
-        /// <param name="path">String with image name.</param>
-        public static Image CreateImage(string path)
+        public PdfGHDocument()
         {
-            ImageData imageData = ImageDataFactory.Create(path);
-            Image image = new(imageData);
-            return image;
+            Stream = new MemoryStream();
+            PdfWriter = new PdfWriter(Stream);
+            PdfDocument = new PdfDocument(PdfWriter);
+            Document = new Document(PdfDocument);
         }
 
         /// <summary>
-        /// Fill a table with the data received.
+        /// Get byte array from stream
         /// </summary>
-        /// <param name="objects">IEnumerable with the objects to complete the table.</param>
-        /// <returns>Return a filled table.</returns>
-        public static Table CreateTable<T>(IEnumerable<T> objects)
+        /// <returns>byte[] with document</returns>
+        public byte[] GetByteStream()
+        {
+            return ((MemoryStream)Stream).ToArray();
+        }
+
+        /// <summary>
+        /// Add a text to the document
+        /// </summary>
+        /// <param name="text">String with the text.</param>
+        /// <param name="fontSize">Font size.</param>
+        /// <param name="alignment">Text alignment.</param>
+        public void AddText(string text, float fontSize, TextAlignment alignment, Color color)
+        {
+            Paragraph paragraph = new Paragraph(text)
+                    .SetTextAlignment(alignment)
+                    .SetFontSize(fontSize)
+                    .SetFontColor(color);
+            this.Document.Add(paragraph);
+        }
+
+        /// <summary>
+        /// Close this Document
+        /// </summary>
+        public void Close()
+        {
+            Document.Close();
+        }
+
+        public void AddTable<T>(IEnumerable<T> objects)
         {
             Type type = objects.First().GetType();
 
@@ -69,7 +90,13 @@ namespace PdfGenerationHelper.Controls
                     table.AddCell(string.IsNullOrEmpty(property.Value) ? "" : property.Value);
                 }
             }
-            return table;
+            Document.Add(table);
         }
+
+        public Document Document { get; set; }
+        public PdfDocument PdfDocument { get; set; }
+        public Stream Stream { get; set; }
+        public PdfWriter PdfWriter { get; set; }
+        public PdfReader PdfReader { get; set; }
     }
 }

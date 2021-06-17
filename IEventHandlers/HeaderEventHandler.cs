@@ -1,10 +1,12 @@
-﻿using iText.Kernel.Colors;
+﻿using iText.IO.Image;
+using iText.Kernel.Colors;
 using iText.Kernel.Events;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
 using iText.Layout;
+using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using System;
@@ -20,11 +22,13 @@ namespace PdfGenerationHelper.IEventHandlers
         private readonly Color _textColor;
         private readonly string _text;
         private readonly float _textFontSize;
-        public HeaderEventHandler(string text, Color textColor, float textFontSize)
+        private readonly int _columns;
+        public HeaderEventHandler(string text, Color textColor, float textFontSize, int columns)
         {
             _textColor = textColor;
             _text = text;
             _textFontSize = textFontSize;
+            _columns = columns;
         }
 
         /// <summary>
@@ -35,15 +39,11 @@ namespace PdfGenerationHelper.IEventHandlers
             PdfDocumentEvent docEvent = (PdfDocumentEvent)@event;
             PdfDocument pdfDoc = docEvent.GetDocument();
             PdfPage page = docEvent.GetPage();
-            Rectangle pageSize = page.GetPageSize();
+            Rectangle rec = new(1/10, 1, page.GetPageSize().GetWidth()/5, page.GetPageSize().GetHeight() / 5);
             PdfCanvas pdfCanvas = new(page.NewContentStreamBefore(), page.GetResources(), pdfDoc);
 
-            pdfCanvas.BeginText()
-                        .SetFontAndSize(PdfFontFactory.CreateFont(), _textFontSize)
-                        .SetColor(_textColor, false)
-                        .MoveText(pageSize.GetWidth() / 2 - 60, pageSize.GetTop() - 20)
-                        .ShowText(_text)
-                        .EndText();
+            ImageData imageData = ImageDataFactory.Create("wwwroot/logo.jpg");
+            pdfCanvas.AddImage(imageData, rec, true);
         }
     }
 }
