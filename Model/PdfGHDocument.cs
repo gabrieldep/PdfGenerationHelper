@@ -4,6 +4,7 @@ using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -109,6 +110,15 @@ namespace PdfGenerationHelper.Model
             ImageData imageData = ImageDataFactory.Create(path);
             Image image = new(imageData);
             Document.Add(image);
+        }
+
+        /// <summary>
+        /// Get the final variable before the pdf
+        /// </summary>
+        /// <returns>FileStreamResult with the Pdf.</returns>
+        public FileStreamResult GetFileStreamResult()
+        {
+            return new FileStreamResult(new MemoryStream(GetByteStream()), "application/pdf");
         }
 
         public Document Document { get; set; }
