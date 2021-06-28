@@ -1,19 +1,9 @@
 ﻿using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Events;
-using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas;
-using iText.Layout;
-using iText.Layout.Borders;
-using iText.Layout.Element;
-using iText.Layout.Properties;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PdfGenerationHelper.IEventHandlers
 {

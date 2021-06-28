@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PdfGenerationHelper.Model
 {
@@ -55,6 +53,9 @@ namespace PdfGenerationHelper.Model
         public void Close()
         {
             Document.Close();
+            PdfDocument.Close();
+            PdfWriter.Close();
+            Stream.Close();
         }
 
         /// <summary>
