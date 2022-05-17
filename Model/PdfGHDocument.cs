@@ -27,10 +27,7 @@ namespace PdfGenerationHelper.Model
         /// Get byte array from stream
         /// </summary>
         /// <returns>byte[] with document</returns>
-        public byte[] GetByteStream()
-        {
-            return ((MemoryStream)Stream).ToArray();
-        }
+        public byte[] GetByteStream() => ((MemoryStream)Stream).ToArray();
 
         /// <summary>
         /// Add a text to the document
@@ -44,7 +41,7 @@ namespace PdfGenerationHelper.Model
                     .SetTextAlignment(alignment)
                     .SetFontSize(fontSize)
                     .SetFontColor(color);
-            this.Document.Add(paragraph);
+            Document.Add(paragraph);
         }
 
         /// <summary>
@@ -73,7 +70,7 @@ namespace PdfGenerationHelper.Model
 
             Table table = new(properties.Count());
             table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
-            table.SetWidth(PdfDocument.GetPage(1).GetPageSize().GetWidth() * 9/10);
+            table.SetWidth(PdfDocument.GetPage(1).GetPageSize().GetWidth() * 9 / 10);
             IEnumerable<PdfObject<T>> ListPdfObjects = objects
                 .Select(o => new PdfObject<T>
                 {
@@ -117,10 +114,7 @@ namespace PdfGenerationHelper.Model
         /// Get the final variable before the pdf
         /// </summary>
         /// <returns>FileStreamResult with the Pdf.</returns>
-        public FileStreamResult GetFileStreamResult()
-        {
-            return new FileStreamResult(new MemoryStream(GetByteStream()), "application/pdf");
-        }
+        public FileStreamResult GetFileStreamResult() => new FileStreamResult(new MemoryStream(GetByteStream()), "application/pdf");
 
         public Document Document { get; set; }
         public PdfDocument PdfDocument { get; set; }
